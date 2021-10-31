@@ -14,6 +14,10 @@ let secretNumber = Math.trunc(Math.random()*20+1)
 let score = 20 
 let highScore = 0
 
+const displayMessage = function(messages) {
+    message.textContent= messages;
+}
+
 checkButton.addEventListener('click', function(){
     
     
@@ -21,8 +25,9 @@ checkButton.addEventListener('click', function(){
     console.log(guessVlaue);
 
     //when player win 
+
     if (guessVlaue == secretNumber){
-        message.textContent = "you win"
+        displayMessage('you win!')
         number.textContent= secretNumber
         document.querySelector('body').style.backgroundColor='#60b347';
         document.querySelector('.number').style.width='30rem'
@@ -31,28 +36,44 @@ checkButton.addEventListener('click', function(){
             highScore = score ;
             heighScores.textContent= highScore;
         }
-
-        //when player insert to heigh number
-    }else if (guessVlaue > secretNumber){
-        if (score > 0){
-            message.textContent = "Too High!"
-            score -- ;
-            scores.textContent = score
-        } else {
-            message.textContent = "you lost my game"
-        }
-       
-        //when player insert to low number  
-     } else if (guessVlaue < secretNumber){
-        if (score > 0){
-        message.textContent ="Too Low"
-        score -- ;
-        scores.textContent = score
-        }else {
-            message.textContent = "you lost the game"
-        }
     }
-})
+        //when guess wrong
+        else if ( guessVlaue !== secretNumber){
+            if (score > 1){
+            message.textContent = 
+               guessVlaue > secretNumber ? "Too High!" : "Too Low";
+                 score -- ;
+                scores.textContent = score
+            } else {
+                displayMessage('You Lost Game!')
+                scores.textContent = 0;
+                 }
+        }
+
+    })
+
+
+
+//     }else if (guessVlaue > secretNumber){
+//         if (score > 0){
+//             message.textContent = "Too High!"
+//             score -- ;
+//             scores.textContent = score
+//         } else {
+//             message.textContent = "you lost my game"
+//         }
+       
+//         //when player insert to low number  
+//      } else if (guessVlaue < secretNumber){
+//         if (score > 0){
+//         message.textContent ="Too Low"
+//         score -- ;
+//         scores.textContent = score
+//         }else {
+//             message.textContent = "you lost the game"
+//         }
+//     }
+// })
 
 again.addEventListener('click', function(){
     
@@ -60,7 +81,7 @@ again.addEventListener('click', function(){
 
  score = 20 
 
-document.querySelector('.message').textContent='Start typing....'
+ displayMessage('Start typing....')
 document.querySelector('.score').textContent=score
 document.querySelector('.number').textContent="?"
 document.querySelector('.guess').value = '';
